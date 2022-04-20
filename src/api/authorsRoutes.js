@@ -45,4 +45,7 @@ authorsRoutes.post('/authors', async (req, res) => {
     await dbClient.close();
   }
 });
+
+// GET /api/authors/:authorId
+
 module.exports = authorsRoutes;

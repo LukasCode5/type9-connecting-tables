@@ -1,3 +1,4 @@
+
 GET http://localhost:3000/api/authors
 ###
 POST http://localhost:3000/api/authors
@@ -11,6 +12,10 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/api/books
 ###
+GET http://localhost:3000/api/books/625e6f3f4c1517ac886454e3
+###
+DELETE  http://localhost:3000/api/books/625fb4ded94b2b01f115f66d
+###
 ###
 GET http://localhost:3000/api/books-agg2
 ###
@@ -20,9 +25,9 @@ POST http://localhost:3000/api/books
 Content-Type: application/json
 
 {
-    "title":"war book",
-    "year":2009,
-    "rating":5
+    "title":"war book 155",
+    "year":2010,
+    "rating":3
 }
 ###
 
