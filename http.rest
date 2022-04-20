@@ -1,1 +1,27 @@
-GET http://localhost:3000/api/users
+GET http://localhost:3000/api/authors
+###
+POST http://localhost:3000/api/authors
+Content-Type: application/json
+
+{
+    "name":"war book Creator",
+    "town":"Vilnius",
+    "bookId":"625e6f3f4c1517ac886454e3"
+}
+###
+GET http://localhost:3000/api/books
+###
+GET http://localhost:3000/api/books-authors
+###
+POST http://localhost:3000/api/books
+Content-Type: application/json
+
+{
+    "title":"war book",
+    "year":2009,
+    "rating":5
+}
+###
+
+GET http://localhost:3000/api/categories
+###
