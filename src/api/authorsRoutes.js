@@ -1,5 +1,5 @@
 const express = require('express');
-const { ObjectId } = require('mongodb');
+const { ObjectId, ObjectID } = require('mongodb');
 const { dbClient } = require('../config');
 
 const authorsRoutes = express.Router();
@@ -48,4 +48,54 @@ authorsRoutes.post('/authors', async (req, res) => {
 
 // GET /api/authors/:authorId
 
+// PATCH /api/author/authorId - atnaujinti varda
+authorsRoutes.patch('/authors/:authorId', async (req, res) => {
+  // updateOne({filterObj/query}, {$set: {name:'James'}})
+  try {
+    const { authorId } = req.params;
+    const { newName } = req.body;
+
+    // prisijungti
+    await dbClient.connect();
+    // atlikti veiksma
+    console.log('connected');
+    const resourse = dbClient.db('library').collection('authors');
+    const upadateResult = await resourse.updateOne(
+      { _id: ObjectId(authorId) },
+      { $set: { name: newName } }
+    );
+    res.status(200).json(upadateResult);
+  } catch (error) {
+    console.error('error in updating author name', error);
+    res.status(500).json('something is wrong');
+  } finally {
+    // uzdaryti prisijungima
+    await dbClient.close();
+  }
+});
+// {newName:'James bk1'}
+
+// PATCH /api/author/add-book/:authorId - prideda 1 knyga i autoriaus kurio id == authorId masyva
+authorsRoutes.patch('/authors/add-book/:authorId', async (req, res) => {
+  try {
+    const { authorId } = req.params;
+    const { bookId } = req.body;
+    // prisijungti
+    await dbClient.connect();
+    // atlikti veiksma
+    console.log('connected');
+    const resourse = dbClient.db('library').collection('authors');
+    const upadateResult = await resourse.updateOne(
+      { _id: ObjectId(authorId) },
+      { $push: { bookId: bookId } }
+    );
+    res.status(200).json(upadateResult);
+  } catch (error) {
+    console.error('error in updating author name', error);
+    res.status(500).json('something is wrong');
+  } finally {
+    // uzdaryti prisijungima
+    await dbClient.close();
+  }
+});
 module.exports = authorsRoutes;

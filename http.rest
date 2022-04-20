@@ -10,6 +10,22 @@ Content-Type: application/json
     "bookId":"625e6f3f4c1517ac886454e3"
 }
 ###
+
+PATCH  http://localhost:3000/api/authors/625e57db63e69dff871dbb47
+Content-Type: application/json
+
+{
+    "newName":"James bk1000"
+}
+###
+PATCH  http://localhost:3000/api/authors/add-book/625e57db63e69dff871dbb47
+Content-Type: application/json
+
+{
+    "bookId":"625e6f3f4c1517ac886454e3"
+}
+###
+
 GET http://localhost:3000/api/books
 ###
 GET http://localhost:3000/api/books/625e6f3f4c1517ac886454e3
