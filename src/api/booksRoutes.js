@@ -1,6 +1,7 @@
 const express = require('express');
 const { ObjectId } = require('mongodb');
 const { dbClient } = require('../config');
+const { getArrayDb } = require('../helper');
 
 const booksRoutes = express.Router();
 
@@ -9,19 +10,10 @@ const booksRoutes = express.Router();
 // Get /api/books/ - grazina visas knygas
 booksRoutes.get('/books', async (req, res) => {
   try {
-    // prisijungti
-    await dbClient.connect();
-    // atlikti veiksma
-    console.log('connected');
-    const resourse = dbClient.db('library').collection('books');
-    const booksArr = await resourse.find().toArray();
+    const booksArr = await getArrayDb('books');
     res.status(200).json(booksArr);
   } catch (error) {
-    console.error('error in get books', error);
-    res.status(500).json('something is wrong');
-  } finally {
-    // uzdaryti prisijungima
-    await dbClient.close();
+    res.status(500).json('Something went wrong');
   }
 });
 booksRoutes.get('/books-agg2', async (req, res) => {

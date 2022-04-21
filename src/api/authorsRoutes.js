@@ -1,6 +1,7 @@
 const express = require('express');
 const { ObjectId, ObjectID } = require('mongodb');
 const { dbClient } = require('../config');
+const { getArrayDb } = require('../helper');
 
 const authorsRoutes = express.Router();
 
@@ -8,21 +9,12 @@ const authorsRoutes = express.Router();
 
 // GET /api/authors - gauti visus autorius
 authorsRoutes.get('/authors', async (req, res) => {
-  try {
-    // prisijungti
-    await dbClient.connect();
-    // atlikti veiksma
-    console.log('connected');
-    const resourse = dbClient.db('library').collection('authors');
-    const authorsArr = await resourse.find().toArray();
-    res.status(200).json(authorsArr);
-  } catch (error) {
-    console.error('error in get authors', error);
-    res.status(500).json('something is wrong');
-  } finally {
-    // uzdaryti prisijungima
-    await dbClient.close();
+  const authorsArr = await getArrayDb('authors');
+  if (authorsArr === false) {
+    res.status(500).json('Something went wrong');
+    return;
   }
+  res.status(200).json(authorsArr);
 });
 
 // POST /api/authors - sukurti nauja autoriu
